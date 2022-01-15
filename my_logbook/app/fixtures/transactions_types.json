@@ -1,0 +1,92 @@
+[
+    {
+        "model": "app.transactiontype",
+        "pk": 1,
+        "fields": {
+            "type_num": 1,
+            "description": "Débito",
+            "action": "Entrada",
+            "signal": "+"
+        }
+    },
+    {
+        "model": "app.transactiontype",
+        "pk": 2,
+        "fields": {
+            "type_num": 2,
+            "description": "Boleto",
+            "action": "Saída",
+            "signal": "-"
+        }
+    },
+    {
+        "model": "app.transactiontype",
+        "pk": 3,
+        "fields": {
+            "type_num": 3,
+            "description": "Financiamento",
+            "action": "Saída",
+            "signal": "-"
+        }
+    },
+    {
+        "model": "app.transactiontype",
+        "pk": 4,
+        "fields": {
+            "type_num": 4,
+            "description": "Crédito",
+            "action": "Entrada",
+            "signal": "+"
+        }
+    },
+    {
+        "model": "app.transactiontype",
+        "pk": 5,
+        "fields": {
+            "type_num": 5,
+            "description": "Recebimento Empréstimo",
+            "action": "Entrada",
+            "signal": "+"
+        }
+    },
+    {
+        "model": "app.transactiontype",
+        "pk": 6,
+        "fields": {
+            "type_num": 6,
+            "description": "Vendas",
+            "action": "Entrada",
+            "signal": "+"
+        }
+    },
+    {
+        "model": "app.transactiontype",
+        "pk": 7,
+        "fields": {
+            "type_num": 7,
+            "description": "Recebimento TED",
+            "action": "Entrada",
+            "signal": "+"
+        }
+    },
+    {
+        "model": "app.transactiontype",
+        "pk": 8,
+        "fields": {
+            "type_num": 8,
+            "description": "Recebimento DOC",
+            "action": "Entrada",
+            "signal": "+"
+        }
+    },
+    {
+        "model": "app.transactiontype",
+        "pk": 9,
+        "fields": {
+            "type_num": 9,
+            "description": "Aluguel",
+            "action": "Saída",
+            "signal": "-"
+        }
+    }
+]
