@@ -3,22 +3,32 @@ from .utils import TransactionsActions, TransactionsSignals
 
 
 # Create your models here.
+class FileOrigin(models.Model):
+    filename = models.CharField(max_length=255)
+    content_type = models.CharField(max_length=255)
+    size = models.FloatField()
+    entries = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
 class Store(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    owner = models.CharField(max_length=255)
+    name = models.CharField(max_length=19, unique=True)
+    owner = models.CharField(max_length=14)
 
 
 class TransactionType(models.Model):
-    type_num = models.IntegerField(max_length=255, unique=True)
+    type_num = models.IntegerField(unique=True)
     description = models.CharField(max_length=255)
-    action = models.CharField(max_length=255, choices=TransactionsActions.choices())
+    action = models.CharField(max_length=10, choices=TransactionsActions.choices())
     signal = models.CharField(max_length=1, choices=TransactionsSignals.choices())
 
 
 class Transactions(models.Model):
-    type = models.ForeignKey(TransactionType, on_delete=models.PROTECT)
+    file_origin = models.ForeignKey(FileOrigin, on_delete=models.PROTECT)
+    type_transaction = models.ForeignKey(TransactionType, on_delete=models.PROTECT)
     store = models.ForeignKey(Store, on_delete=models.PROTECT)
-    timestamp = models.DateTimeField()
-    value = models.CharField(max_length=255)
-    cpf = models.CharField(max_length=255)
-    card = models.CharField(max_length=255)
+    datetime = models.DateTimeField()
+    value = models.CharField(max_length=10)
+    cpf = models.CharField(max_length=11)
+    card = models.CharField(max_length=12)

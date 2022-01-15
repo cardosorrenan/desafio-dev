@@ -1,0 +1,23 @@
+<!doctype html>
+
+<html lang="pt-br">
+    <head>
+        {% load static %}
+        
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>A Basic HTML5 Template</title>
+        <meta name="description" content="A simple HTML5 Template for new projects.">
+        <meta name="author" content="Renan Cardoso">
+        <meta property="og:title" content="My Logbook">
+        <link rel="icon" href="/favicon.ico">
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+        <link href="{% static 'styles.css' %}" rel="stylesheet"/>
+    </head>
+
+    <body>
+        <h1>Hello World</h1>
+        <a href="/upload_cnab">Go to upload</a>
+        {% block content %} {% endblock %}        
+    </body>
+</html>
