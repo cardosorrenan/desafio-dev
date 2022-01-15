@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 
 from .utils import FileCNAB
 from .forms import UploadCNABForm
-from .models import FileOrigin, Transactions, TransactionType, Store
+from .models import FileOrigin, Transaction, TransactionType, Store
 
 # Create your views here.
 def index(request):
@@ -36,8 +36,8 @@ def manage_cnab(request):
                     Store.objects.bulk_create(batch_stores, len(stores))
 
                     # Persisting Transactions
-                    transactions = [Transactions(file_origin=file,
-                                                type_transaction=TransactionType.objects.filter(type_num=t['type']).first(), 
+                    transactions = [Transaction(file_origin=file,
+                                                type=TransactionType.objects.filter(type_num=t['type']).first(), 
                                                 store=Store.objects.filter(name=t['store']).first(), 
                                                 value=t['value'],
                                                 cpf=t['cpf'],
@@ -45,7 +45,7 @@ def manage_cnab(request):
                                                 datetime=t['datetime']) 
                                                 for t in cnab_file.transactions]
                     batch_transactions = list(islice(transactions, len(transactions)))
-                    Transactions.objects.bulk_create(batch_transactions, len(transactions))
+                    Transaction.objects.bulk_create(batch_transactions, len(transactions))
             except Exception as e:
                 print(e)
 

@@ -24,11 +24,12 @@ class TransactionType(models.Model):
     signal = models.CharField(max_length=1, choices=TransactionsSignals.choices())
 
 
-class Transactions(models.Model):
-    file_origin = models.ForeignKey(FileOrigin, on_delete=models.PROTECT)
-    type_transaction = models.ForeignKey(TransactionType, on_delete=models.PROTECT)
-    store = models.ForeignKey(Store, on_delete=models.PROTECT)
+class Transaction(models.Model):
+    file_origin = models.ForeignKey(FileOrigin, related_name='file', on_delete=models.PROTECT)
+    type = models.ForeignKey(TransactionType, related_name='type', on_delete=models.PROTECT)
+    store = models.ForeignKey(Store, related_name='store', on_delete=models.PROTECT)
     datetime = models.DateTimeField()
     value = models.CharField(max_length=10)
     cpf = models.CharField(max_length=11)
     card = models.CharField(max_length=12)
+    
