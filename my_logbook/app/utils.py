@@ -34,10 +34,8 @@ class FileCNAB():
         self.stores = []
 
 
-    def clean_field_value(self, value_str):
-        value_int = int(value_str)/100
-        value_norm = value_int/100
-        return value_norm
+    def clean_field_value(self, value_str):        
+        return float(value_str)/100
 
 
     def clean_field_datetime(self, date_str, time_str):

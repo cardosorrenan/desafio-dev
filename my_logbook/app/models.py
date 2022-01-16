@@ -1,8 +1,8 @@
 from django.db import models
+from django.db.models import Sum
 from .utils import TransactionsActions, TransactionsSignals
 
 
-# Create your models here.
 class FileOrigin(models.Model):
     filename = models.CharField(max_length=255)
     content_type = models.CharField(max_length=255)
@@ -15,6 +15,9 @@ class FileOrigin(models.Model):
 class Store(models.Model):
     name = models.CharField(max_length=19, unique=True)
     owner = models.CharField(max_length=14)
+
+    def total_values(self):
+        return Transaction.objects.filter(store_id=self.id).aggregate(Sum('value'))
 
 
 class TransactionType(models.Model):
@@ -29,7 +32,8 @@ class Transaction(models.Model):
     type = models.ForeignKey(TransactionType, related_name='type', on_delete=models.PROTECT)
     store = models.ForeignKey(Store, related_name='store', on_delete=models.PROTECT)
     datetime = models.DateTimeField()
-    value = models.CharField(max_length=10)
+    value = models.DecimalField(max_digits=16, decimal_places=2)
     cpf = models.CharField(max_length=11)
     card = models.CharField(max_length=12)
+
     
