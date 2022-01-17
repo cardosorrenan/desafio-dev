@@ -1,2 +1,5 @@
 my_logbook/db.sqlite3
 **/*.pyc
+my_logbook/env/
+my_logbook/app/migrations/
+my_logbook/app/migrations/0001_initial.py
