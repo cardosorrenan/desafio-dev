@@ -17,7 +17,10 @@ class Store(models.Model):
     owner = models.CharField(max_length=14)
 
     def total_values(self):
-        return Transaction.objects.filter(store_id=self.id).aggregate(Sum('value'))
+        inputs = Transaction.objects.filter(type__signal='+', store_id=self.id).aggregate(Sum('value'))
+        outputs = Transaction.objects.filter(type__signal='-', store_id=self.id).aggregate(Sum('value'))
+        total = float(inputs['value__sum'] or 0) - float(outputs['value__sum'] or 0)
+        return total
 
 
 class TransactionType(models.Model):

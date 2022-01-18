@@ -35,6 +35,8 @@ services:
              python manage.py runserver 0.0.0.0:8000"
     ports:
       - 8000:8000
+    environment:
+      - DB_HOST=db_pg
     links:
       - db_pg:db_pg
     depends_on:

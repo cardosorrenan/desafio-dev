@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% load bootstrap_icons %}
+
+{% block content %}
+
+<div id="container-title">
+    {% bs_icon 'shop' size='2em' %}
+    <h1 id="page-title">Stores</h1>
+</div>
+<hr id="separator-title"></hr>
+{% for s in stores %}
+    <div id="container-store-name">
+        {% bs_icon 'arrow-down-up' size='1em' %}
+        <p><a id="store-name" href="/stores/{{ s.id }}/transactions/">{{s.name}}</a></p>
+    </div>
+{% endfor %}
+
+{% endblock %}

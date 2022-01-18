@@ -22,7 +22,7 @@ class StoreTotalValuesSerializer(serializers.HyperlinkedModelSerializer):
     total_values = SerializerMethodField()
 
     def get_total_values(self, obj):
-        return obj.total_values()['value__sum']
+        return obj.total_values()
 
     class Meta:
         model = Store

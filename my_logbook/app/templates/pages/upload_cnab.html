@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% load bootstrap_icons %}
+
+{% block content %}
+    <div id="container-title">
+        {% bs_icon 'file-earmark-arrow-down' size='2em' %}
+        <h1 id="page-title">Upload CNAB</h1>
+    </div>
+    <hr id="separator-title"></hr>
+    <form action="/manage_cnab" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Send</button>
+    </form>
+{% endblock %}
+

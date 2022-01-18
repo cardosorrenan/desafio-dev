@@ -9,14 +9,28 @@ from .utils import FileCNAB
 from .forms import UploadCNABForm
 from .models import FileOrigin, Transaction, TransactionType, Store
 
-# Create your views here.
-def index(request):
-    return render(request, 'base.html')
+
+
+def stores(request):
+    stores = Store.objects.all()
+    return render(request, 'pages/stores.html', { 'stores': stores })
+
+
+def stores_transactions(request, store_id):
+    store = Store.objects.get(id=store_id)
+    store_amount = store.total_values()
+    transactions = Transaction.objects.filter(store_id=store_id)
+    context = {
+        'store': store,
+        'store_amount': store_amount,
+        'transactions': transactions
+    }
+    return render(request, 'pages/transactions_store.html', context)
 
 
 def upload_cnab(request):
     form = UploadCNABForm()
-    return render(request, 'form.html', { 'form': form })
+    return render(request, 'pages/upload_cnab.html', { 'form': form })
 
 
 def manage_cnab(request):

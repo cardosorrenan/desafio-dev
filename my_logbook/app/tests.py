@@ -6,8 +6,8 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 
 
 class UploadFIleModelTests(TestCase):
-    data = File(open('../CNAB.txt', 'rb'))
-    upload_file = SimpleUploadedFile('../CNAB.txt', data.read())
+    data = File(open('./CNAB.txt', 'rb'))
+    upload_file = SimpleUploadedFile('./CNAB.txt', data.read())
     cnab_file = FileCNAB(upload_file)
     cnab_file.load_data()
 
