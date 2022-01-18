@@ -8,140 +8,181 @@
 ---
 
 <h6 align="center">
-An app for tracking financial transactions :smile:
+An app for tracking financial transactions :moneybag:
 </h6>
 
 ### Get repo
 ```
 git clone https://github.com/cardosorrenan/desafio-dev
 ```
+####
+```
+cd desafio_dev/my_logbook/
+```
 
-# Install steps
+# Installation steps
 
-
-## 1º Option - Docker
----
+## 1º Option - Docker :rocket:
 
 #### 1.1 - Run docker compose
-```
-cd my_logbook
-```
-
-#### 1.2 - Run docker compose
 ```
 docker-compose up --build -d
 ```
 
-- http://localhost:8000
+#### 1.2 - Go to app :desktop_computer:
+- Upload the CNAB file at http://localhost:8000/upload_cnab
+- Check your transactions at http://localhost:8000
 
-## 2º Option - Local (Standard)
+## 2º Option - Prepare the local environment :inbox_tray:
+
+#### Pre-requirements :wrench:
+
+- [Python 3](https://www.python.org/downloads/)
+- [Pip](https://pip.pypa.io/en/stable/installation/)
+- [Postgres](https://www.postgresql.org/download/)
+
+### 2.1 - Setup Database :abacus:
 ---
-#### Pre-requirements
-```
-Python 3
-Pip
-Postgres
-```
 
-### 2.1 - Setup Database
----
-
-#### 1.1.2 - Accessing postgres via command-line
+#### 2.1.1 - Accessing postgres via command-line
 ```
+sudo service postgresql start
+
 sudo -i -u postgres
 
 psql
 ```
 
-#### 1.1.3 - Creating Database and User
+#### 2.1.2 - Creating database and user
 ```
 CREATE DATABASE mylogbook;
 
 CREATE USER mylogbook_user WITH ENCRYPTED PASSWORD 'mylogbook_pass';
 
-GRANT ALL PRIVILEGES ON DATABASE mylogbook TO mylogbook;
+GRANT ALL PRIVILEGES ON DATABASE mylogbook TO mylogbook_user;
 ```
 
-#### 1.1.4 - User permit create database for tests
+#### 2.1.3 - User permit create database for tests
 ```
 ALTER USER mylogbook_user CREATEDB;
 
 exit;
 ```
 
-### 1.2 - Setup Application
+### 2.2 - Setup Application :desktop_computer:
 ---
-#### 1.2.1 - Open app folder after download repo
+
+#### 2.2.1 - Install virtual environment (venv)
 ```
-cd my_logbook
+pip3 install virtualenv
 ```
 
-#### 1.2.2 - Install virtual environment (venv)
+#### 2.2.2 - Create a venv 'env'
 ```
-pip install virtuaenv
-```
-
-#### 1.2.3 - Create a venv 'env'
-```
-python -m venv env
+python3 -m venv env
 ```
 
-#### 1.2.4 - Activate env
+#### 2.2.3 - Activate env
 ```
 source env/bin/activate
 ```
 
-#### 1.2.5 - Install packages
+#### 2.2.4 - Install packages
 ```
-pip install -r requirements.txt
-```
-
-#### 1.2.6 - Create migrations
-```
-python manage.py makemigrations
+pip3 install -r requirements.txt
 ```
 
-#### 1.2.7 - Run migrate
+#### 2.2.5 - Create migrations
 ```
-python manage.py migrate
+python3 manage.py makemigrations
 ```
 
-#### 1.2.8 - Create superuser (dev/tests purposes)
+#### 2.2.6 - Run migrate
+```
+python3 manage.py migrate
+```
+
+#### 2.2.7 - Create superuser (dev/tests purposes)
 ```
 ./manage.py create_superuser_test --username superuser_test --password 1234 --noinput --email 'superuser@test.com'
 ```
 
-#### 1.2.9 - Dump data
+#### 2.2.8 - Dump data
 ```
-python manage.py loaddata app/fixtures/*.json
+python3 manage.py loaddata app/fixtures/*.json
 ```
+- Transaction types and a predefined OAuth application provider
 
-#### 1.2.10 - Run tests
+#### 2.2.9 - Run tests
 ```
-python manage.py test
-```
-
-#### 1.2.11 - Run app
-```
-python manage.py runserver
+python3 manage.py test
 ```
 
-- http://localhost:8000
+#### 2.2.10 - Run app
+```
+python3 manage.py runserver
+```
+
+#### 2.2.11 - Go to app
+- Upload the CNAB file at http://localhost:8000/upload_cnab
+- Check your transactions at http://localhost:8000
 
 
-# API Docs
+# API Docs :scroll:
 
-## Insomnia File
+### Insomnia File
 ---
 <a href="./assets/Insomnia_2022-01-18.json" download>Click to Download</a>
 
-## Relational diagram
+### Relational diagram
 ---
 <p align="center">
   <img width="400" src="./assets/dr.png">
 </p>
 
-## Store
+### Oauth
+---
+
+#### GET: /o/token
+```
+REQUEST
+{
+    "client_secret": "client_secret_test", 
+    "client_id": "client_id_test", 
+    "grant_type": "password",
+    "username": "superuser_test", 
+    "password": "1234"
+}
+
+RESPONSE
+{
+  "access_token": "wS4W3gUdlL2KdMcCQHQBf7W0pTO4sR",
+  "expires_in": 36000,
+  "token_type": "Bearer",
+  "scope": "read write",
+  "refresh_token": "jUsEidWSHx2lWSKnCZkZ9juAWsWmxy"
+}
+```
+
+#### GET: /o/revoke_token
+```
+REQUEST
+{
+	"client_secret": "client_secret_test", 
+	"client_id": "client_id_test", 
+	"token": "wS4W3gUdlL2KdMcCQHQBf7W0pTO4sR"
+}
+
+RESPONSE
+200
+```
+
+- Obs.: Use token authorization on every request
+```
+Authorization: Bearer <token>
+```
+
+### Store
 ---
 ```
  Store {
@@ -160,7 +201,7 @@ python manage.py runserver
  | DELETE | /api/v1/store/{id} | DELETE | - | - |
 
 
-## Transaction
+### Transaction
 ---
 ```
  Transaction {
@@ -182,7 +223,7 @@ python manage.py runserver
  | EDIT | /api/v1/transaction/{id} | PATCH | Transaction | Transaction |
  | DELETE | /api/v1/transaction/{id} | DELETE | - | - |
 
-## File Origin (Uploads)
+### File Origin (Uploads)
 ---
 ```
  FileOrigin {
@@ -201,40 +242,3 @@ python manage.py runserver
  | :-: | :-: | :-: | :-: | :-: |
  | INDEX | /api/v1/file_origin | GET | - | FileOrigin[ ] |
  | GET ONE | /api/v1/file_origin/{id} | GET | - | FileOrigin |
-
-## Oauth
----
-
-### GET: /o/token
-```
-REQUEST
-{
-    "client_secret": "client_secret_test", 
-    "client_id": "client_id_test", 
-    "grant_type": "password",
-    "username": "superuser_test", 
-    "password": "1234"
-}
-
-RESPONSE
-{
-  "access_token": "wS4W3gUdlL2KdMcCQHQBf7W0pTO4sR",
-  "expires_in": 36000,
-  "token_type": "Bearer",
-  "scope": "read write",
-  "refresh_token": "jUsEidWSHx2lWSKnCZkZ9juAWsWmxy"
-}
-```
-
-### GET: /o/revoke_token
-```
-REQUEST
-{
-	"client_secret": "client_secret_test", 
-	"client_id": "client_id_test", 
-	"token": "wS4W3gUdlL2KdMcCQHQBf7W0pTO4sR"
-}
-
-RESPONSE
-200
-```
