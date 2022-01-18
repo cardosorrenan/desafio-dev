@@ -111,7 +111,7 @@ DATABASES = {
         "NAME": os.getenv('POSTGRES_DB', 'mylogbook'),
         "USER": os.getenv('POSTGRES_USER', 'mylogbook_user'),
         "PASSWORD": os.getenv('POSTGRES_PASSWORD', 'mylogbook_pass'),
-        "PORT": 5432,
+        "PORT": os.environ('DB_PORT', 5432),
     }
 }
 
