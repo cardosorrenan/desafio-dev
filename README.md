@@ -132,7 +132,7 @@ python3 manage.py runserver
 
 ### Insomnia File
 ---
-<a href="./assets/Insomnia_2022-01-18.json" download>Click to Download</a>
+<a href="https://raw.githubusercontent.com/cardosorrenan/desafio-dev/main/assets/Insomnia_2022-01-18.json" download>Click to Download</a>
 
 ### Relational diagram
 ---
