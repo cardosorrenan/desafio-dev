@@ -1,85 +1,240 @@
-# Desafio programação - para vaga desenvolvedor
 
-Por favor leiam este documento do começo ao fim, com muita atenção.
-O intuito deste teste é avaliar seus conhecimentos técnicos em programação.
-O teste consiste em parsear [este arquivo de texto(CNAB)](https://github.com/ByCodersTec/desafio-ruby-on-rails/blob/master/CNAB.txt) e salvar suas informações(transações financeiras) em uma base de dados a critério do candidato.
-Este desafio deve ser feito por você em sua casa. Gaste o tempo que você quiser, porém normalmente você não deve precisar de mais do que algumas horas.
+# My Log Book
 
-# Instruções de entrega do desafio
-
-1. Primeiro, faça um fork deste projeto para sua conta no Github (crie uma se você não possuir).
-2. Em seguida, implemente o projeto tal qual descrito abaixo, em seu clone local.
-3. Por fim, envie via email o projeto ou o fork/link do projeto para seu contato Bycoders_ com cópia para rh@bycoders.com.br.
-
-# Descrição do projeto
-
-Você recebeu um arquivo CNAB com os dados das movimentações finanaceira de várias lojas.
-Precisamos criar uma maneira para que estes dados sejam importados para um banco de dados.
-
-Sua tarefa é criar uma interface web que aceite upload do [arquivo CNAB](https://github.com/ByCodersTec/desafio-ruby-on-rails/blob/master/CNAB.txt), normalize os dados e armazene-os em um banco de dados relacional e exiba essas informações em tela.
-
-**Sua aplicação web DEVE:**
-
-1. Ter uma tela (via um formulário) para fazer o upload do arquivo(pontos extras se não usar um popular CSS Framework )
-2. Interpretar ("parsear") o arquivo recebido, normalizar os dados, e salvar corretamente a informação em um banco de dados relacional, **se atente as documentações** que estão logo abaixo.
-3. Exibir uma lista das operações importadas por lojas, e nesta lista deve conter um totalizador do saldo em conta
-4. Ser escrita na sua linguagem de programação de preferência
-5. Ser simples de configurar e rodar, funcionando em ambiente compatível com Unix (Linux ou Mac OS X). Ela deve utilizar apenas linguagens e bibliotecas livres ou gratuitas.
-6. Git com commits atomicos e bem descritos
-7. PostgreSQL, MySQL ou SQL Server
-8. Ter testes automatizados
-9. Docker compose (Pontos extras se utilizar)
-10. Readme file descrevendo bem o projeto e seu setup
-11. Incluir informação descrevendo como consumir o endpoint da API
-
-**Sua aplicação web não precisa:**
-
-1. Lidar com autenticação ou autorização (pontos extras se ela fizer, mais pontos extras se a autenticação for feita via OAuth).
-2. Ser escrita usando algum framework específico (mas não há nada errado em usá-los também, use o que achar melhor).
-3. Documentação da api.(Será um diferencial e pontos extras se fizer)
-
-# Documentação do CNAB
-
-| Descrição do campo  | Inicio | Fim | Tamanho | Comentário
-| ------------- | ------------- | -----| ---- | ------
-| Tipo  | 1  | 1 | 1 | Tipo da transação
-| Data  | 2  | 9 | 8 | Data da ocorrência
-| Valor | 10 | 19 | 10 | Valor da movimentação. *Obs.* O valor encontrado no arquivo precisa ser divido por cem(valor / 100.00) para normalizá-lo.
-| CPF | 20 | 30 | 11 | CPF do beneficiário
-| Cartão | 31 | 42 | 12 | Cartão utilizado na transação 
-| Hora  | 43 | 48 | 6 | Hora da ocorrência atendendo ao fuso de UTC-3
-| Dono da loja | 49 | 62 | 14 | Nome do representante da loja
-| Nome loja | 63 | 81 | 19 | Nome da loja
-
-# Documentação sobre os tipos das transações
-
-| Tipo | Descrição | Natureza | Sinal |
-| ---- | -------- | --------- | ----- |
-| 1 | Débito | Entrada | + |
-| 2 | Boleto | Saída | - |
-| 3 | Financiamento | Saída | - |
-| 4 | Crédito | Entrada | + |
-| 5 | Recebimento Empréstimo | Entrada | + |
-| 6 | Vendas | Entrada | + |
-| 7 | Recebimento TED | Entrada | + |
-| 8 | Recebimento DOC | Entrada | + |
-| 9 | Aluguel | Saída | - |
-
-# Avaliação
-
-Seu projeto será avaliado de acordo com os seguintes critérios.
-
-1. Sua aplicação preenche os requerimentos básicos?
-2. Você documentou a maneira de configurar o ambiente e rodar sua aplicação?
-3. Você seguiu as instruções de envio do desafio?
-4. Qualidade e cobertura dos testes unitários.
-
-Adicionalmente, tentaremos verificar a sua familiarização com as bibliotecas padrões (standard libs), bem como sua experiência com programação orientada a objetos a partir da estrutura de seu projeto.
-
-# Referência
-
-Este desafio foi baseado neste outro desafio: https://github.com/lschallenges/data-engineering
+<p align="center">
+  <img width="500" src="./assets/screen.png">
+</p>
 
 ---
 
-Boa sorte!
+<h6 align="center">
+An app for tracking financial transactions :smile:
+</h6>
+
+### Get repo
+```
+git clone https://github.com/cardosorrenan/desafio-dev
+```
+
+# Install steps
+
+
+## 1º Option - Docker
+---
+
+#### 1.1 - Run docker compose
+```
+cd my_logbook
+```
+
+#### 1.2 - Run docker compose
+```
+docker-compose up --build -d
+```
+
+- http://localhost:8000
+
+## 2º Option - Local (Standard)
+---
+#### Pre-requirements
+```
+Python 3
+Pip
+Postgres
+```
+
+### 2.1 - Setup Database
+---
+
+#### 1.1.2 - Accessing postgres via command-line
+```
+sudo -i -u postgres
+
+psql
+```
+
+#### 1.1.3 - Creating Database and User
+```
+CREATE DATABASE mylogbook;
+
+CREATE USER mylogbook_user WITH ENCRYPTED PASSWORD 'mylogbook_pass';
+
+GRANT ALL PRIVILEGES ON DATABASE mylogbook TO mylogbook;
+```
+
+#### 1.1.4 - User permit create database for tests
+```
+ALTER USER mylogbook_user CREATEDB;
+
+exit;
+```
+
+### 1.2 - Setup Application
+---
+#### 1.2.1 - Open app folder after download repo
+```
+cd my_logbook
+```
+
+#### 1.2.2 - Install virtual environment (venv)
+```
+pip install virtuaenv
+```
+
+#### 1.2.3 - Create a venv 'env'
+```
+python -m venv env
+```
+
+#### 1.2.4 - Activate env
+```
+source env/bin/activate
+```
+
+#### 1.2.5 - Install packages
+```
+pip install -r requirements.txt
+```
+
+#### 1.2.6 - Create migrations
+```
+python manage.py makemigrations
+```
+
+#### 1.2.7 - Run migrate
+```
+python manage.py migrate
+```
+
+#### 1.2.8 - Create superuser (dev/tests purposes)
+```
+./manage.py create_superuser_test --username superuser_test --password 1234 --noinput --email 'superuser@test.com'
+```
+
+#### 1.2.9 - Dump data
+```
+python manage.py loaddata app/fixtures/*.json
+```
+
+#### 1.2.10 - Run tests
+```
+python manage.py test
+```
+
+#### 1.2.11 - Run app
+```
+python manage.py runserver
+```
+
+- http://localhost:8000
+
+
+# API Docs
+
+## Insomnia File
+---
+<a href="./assets/Insomnia_2022-01-18.json" download>Click to Download</a>
+
+## Relational diagram
+---
+<p align="center">
+  <img width="400" src="./assets/dr.png">
+</p>
+
+## Store
+---
+```
+ Store {
+    name: string
+    owner: string
+ }
+ ```
+
+ | | URL | METHOD | BODY | RESPONSE |
+ | :-: | :-: | :-: | :-: | :-: |
+ | INDEX | /api/v1/store | GET | - | Store[ ] |
+ | GET ONE | /api/v1/store/{id} | GET | - | Store |
+ | GET AMOUNT | /api/v1/store/{id}/amount | GET | - | id,<br /> amount |
+ | CREATE | /api/v1/store | POST | Store | Store |
+ | EDIT | /api/v1/store/{id} | PATCH | Store | Store |
+ | DELETE | /api/v1/store/{id} | DELETE | - | - |
+
+
+## Transaction
+---
+```
+ Transaction {
+    file_origin = int
+    type = int
+    store = int
+    datetime = datetime
+    value = decimal
+    cpf = string
+    card = string
+ }
+ ```
+
+ | | URL | METHOD | BODY | RESPONSE |
+ | :-: | :-: | :-: | :-: | :-: |
+ | INDEX | /api/v1/transaction | GET | - | Transaction[ ] |
+ | GET ONE | /api/v1/transaction/{id} | GET | - | Transaction |
+ | CREATE | /api/v1/transaction | POST | Transaction | Transaction |
+ | EDIT | /api/v1/transaction/{id} | PATCH | Transaction | Transaction |
+ | DELETE | /api/v1/transaction/{id} | DELETE | - | - |
+
+## File Origin (Uploads)
+---
+```
+ FileOrigin {
+    filename = string
+    content_type = string
+    size = float
+    entries = int
+    created_at = datetime
+    updated_at = datetime
+ }
+ 
+ 
+ ```
+
+ | | URL | METHOD | BODY | RESPONSE |
+ | :-: | :-: | :-: | :-: | :-: |
+ | INDEX | /api/v1/file_origin | GET | - | FileOrigin[ ] |
+ | GET ONE | /api/v1/file_origin/{id} | GET | - | FileOrigin |
+
+## Oauth
+---
+
+### GET: /o/token
+```
+REQUEST
+{
+    "client_secret": "client_secret_test", 
+    "client_id": "client_id_test", 
+    "grant_type": "password",
+    "username": "superuser_test", 
+    "password": "1234"
+}
+
+RESPONSE
+{
+  "access_token": "wS4W3gUdlL2KdMcCQHQBf7W0pTO4sR",
+  "expires_in": 36000,
+  "token_type": "Bearer",
+  "scope": "read write",
+  "refresh_token": "jUsEidWSHx2lWSKnCZkZ9juAWsWmxy"
+}
+```
+
+### GET: /o/revoke_token
+```
+REQUEST
+{
+	"client_secret": "client_secret_test", 
+	"client_id": "client_id_test", 
+	"token": "wS4W3gUdlL2KdMcCQHQBf7W0pTO4sR"
+}
+
+RESPONSE
+200
+```

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% load bootstrap_icons %}
+
+{% block content %}
+    <span id="button-previous"><a href="/"></a></span>
+    <div id="container-title">
+        {% bs_icon 'arrow-down-up' size='2em' %}
+        <h1 id="page-title">Transactions</h1>
+    </div>
+    <hr id="separator-title"></hr>
+    <h2 id="store-title-name">{{ store.name }}</h2>
+    <h1 id="store-title-amount">TOTAL: R$ {{ store_amount|floatformat:2 }}</h1>
+    
+    <ul class="responsive-table">
+        <li class="table-header">
+            <div class="col-header">Action</div>
+            <div class="col-header">Description</div>
+            <div class="col-header">Date/Time</div>
+            <div class="col-header">Value</div>
+        </li>
+        {% for s in transactions %}
+        <li class="table-row signal-{{ s.type.action }}">
+            <div class="col">{{s.type.action}}</div>
+            <div class="col">{{s.type.description}}</div>
+            <div class="col">{{s.datetime}}</div>
+            <div class="col">{{s.value}}</div>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

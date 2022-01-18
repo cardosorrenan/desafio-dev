@@ -1,0 +1,19 @@
+[
+    {
+        "model": "oauth2_provider.application",
+        "pk": 1,
+        "fields": {
+            "client_id" : "client_id_test",
+            "redirect_uris" : "",
+            "client_type" : "confidential",
+            "client_secret" : "client_secret_test",
+            "name" : "provider_app_test",
+            "user_id" : null,
+            "skip_authorization" : 0,
+            "created" : "2022-01-15 16:59:32.479522+00:00",
+            "updated" : "2022-01-15 16:59:32.479549+00:00",
+            "algorithm" : "",
+            "authorization_grant_type" : "password"
+        }            
+    }
+]
